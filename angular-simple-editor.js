@@ -41,9 +41,11 @@
           class : 'well well-sm',
           role : 'toolbar'
         }).css({
-          position : 'absolute',
-          top : iElm.offset().top - 50,
-          display : 'none',          
+          position : 'fixed',
+          top : 30,
+          left : 0,
+          display : 'none',
+          opacity : 0.5
         });      
 
         var controlls = "<div id='editControls' class='btn-toolbar'>" +
@@ -82,6 +84,10 @@
         "</div>" ;
 
         editControlls.append(controlls);
+
+        editControlls.css({
+          top : - editControlls.height()
+        });
 
         iElm.parent().prepend(editControlls);
         iElm.attr('contentEditable', true);
