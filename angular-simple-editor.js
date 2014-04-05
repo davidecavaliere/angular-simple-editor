@@ -2,7 +2,11 @@
   'use strict';
 
   /**
-   * usage: <div ng-model="content" editable></textarea>
+   * usage: <textarea ng-model="content" redactor></textarea>
+   *
+   *    additional options:
+   *      redactor: hash (pass in a redactor options hash)
+   *
    */
   angular.module('ui.simple-editor', [])
     .directive("editable", ['$timeout', function ($timeout) {
@@ -14,13 +18,13 @@
       scope: {
         model : '=ngModel'
       }, // {} = isolate, true = child, false/undefined = no change
-      controller: function($scope, $element, $attrs) {        
-        $scope.f = function() {          
-          $scope.model = $element.html();      
-          $scope.editControlls.css({
-            top : $element.offset().top + $element.outerHeight()
-          })    
-          $scope.timeout = setTimeout($scope.f, 500);
+      controller: function($scope, $element, $attrs) {
+        console.log("Controlling");
+        console.log($scope);
+        $scope.f = function() {
+          console.log("Watching");
+          $scope.model = $element.html();
+          $scope.timeout = setTimeout(f, 1000);
         }
       },
       require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
@@ -30,15 +34,17 @@
       // replace: true,
       // transclude: true,
       // compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
-      link: function($scope, iElm, iAttrs, controller) {        
-        $scope.editControlls = $('<div>',{          
+      link: function($scope, iElm, iAttrs, controller) {
+        console.log("Linking");
+        console.log($scope);
+        var editControlls = $('<div>',{          
           class : 'well well-sm',
           role : 'toolbar'
         }).css({
           position : 'absolute',
-          top : iElm.offset().top + iElm.height(),
+          top : iElm.offset().top - 50,
           display : 'none',          
-        });
+        });      
 
         var controlls = "<div id='editControls' class='btn-toolbar'>" +
           "<div class='btn-group'>" +
@@ -72,22 +78,19 @@
           "</div>" +
           "<div class='btn-group'>" +
             "<a class='btn btn-default' data-role='hide' href='javascript:void(0)'><i class='fa fa-edit'></i></a>" +
-          "</div>" + 
-          "<div class='btn-group'>" +
-            "{{content}}" +
-          "</div>"
-        "</div>" + $scope.model;
+          "</div>" 
+        "</div>" ;
 
-        $scope.editControlls.append(controlls);
+        editControlls.append(controlls);
 
-        iElm.parent().prepend($scope.editControlls);
+        iElm.parent().prepend(editControlls);
         iElm.attr('contentEditable', true);
 
         $('#editControls a').click(function(e) {
           switch($(this).data('role')) {
             case 'hide' :
-              $scope.editControlls.hide();
-              window.clearTimeout($scope.timeout);
+              editControlls.hide();
+              
               break;
             case 'h1':
             case 'h2':
@@ -101,8 +104,7 @@
         });
 
         iElm.on('click', function() {
-          $scope.editControlls.show();
-          $scope.f();
+          editControlls.show();
         });
 
       }
