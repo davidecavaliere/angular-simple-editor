@@ -1,0 +1,30 @@
+{
+  "name": "angular-simple-editor",
+  "version": "0.0.1",
+  "authors": [
+    "davide cavaliere <cavaliere.davide@gmail.com>"
+  ],
+  "description": "simplest WYSIWYG",
+  "main": "angular-simple-editor.js",
+  "keywords": [
+    "WYSIWYG",
+    "editor",
+    "html5",
+    "Angular",
+    "directives"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/davidecavaliere/angular-simple-editor.git",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.2.16",
+    "jquery": "~2.1.0"
+  }
+}
