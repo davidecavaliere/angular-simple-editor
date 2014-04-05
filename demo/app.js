@@ -9,5 +9,5 @@ angular.module('app', ['ngRoute', 'ui.simple-editor'])
 angular.module('app')
   .controller('SimpleEditorDemo', 
     function ($scope) {
-
+      $scope.content1 = "Initing content1";
     });

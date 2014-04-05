@@ -19,13 +19,7 @@
         model : '=ngModel'
       }, // {} = isolate, true = child, false/undefined = no change
       controller: function($scope, $element, $attrs) {
-        console.log("Controlling");
-        console.log($scope);
-        $scope.f = function() {
-          console.log("Watching");
-          $scope.model = $element.html();
-          $scope.timeout = setTimeout(f, 1000);
-        }
+      
       },
       require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
       // restrict: 'A', // E = Element, A = Attribute, C = Class, M = Comment
@@ -35,8 +29,7 @@
       // transclude: true,
       // compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
       link: function($scope, iElm, iAttrs, controller) {
-        console.log("Linking");
-        console.log($scope);
+        
         var editControlls = $('<div>',{          
           class : 'well well-sm',
           role : 'toolbar'
@@ -58,9 +51,9 @@
             "<a class='btn btn-default' data-role='italic' href='javascript:void(0)'><i class='fa fa-italic'></i></a>" +
             "<a class='btn btn-default' data-role='underline' href='javascript:void(0)'><i class='fa fa-underline'></i></a>" +
             "<a class='btn btn-default' data-role='strikeThrough' href='javascript:void(0)'><i class='fa fa-strikethrough'></i></a>" +
-            "<a class='btn btn-default' data-role='justifyLeft' href='javascript:void(0)'><i class='fa fa-align-left'></i></a>" +
           "</div>" +
           "<div class='btn-group'>" +
+            "<a class='btn btn-default' data-role='justifyLeft' href='javascript:void(0)'><i class='fa fa-align-left'></i></a>" +
             "<a class='btn btn-default' data-role='justifyCenter' href='javascript:void(0)'><i class='fa fa-align-center'></i></a>" +
             "<a class='btn btn-default' data-role='justifyRight' href='javascript:void(0)'><i class='fa fa-align-right'></i></a>" +
             "<a class='btn btn-default' data-role='justifyFull' href='javascript:void(0)'><i class='fa fa-align-justify'></i></a>" +
@@ -96,7 +89,6 @@
           switch($(this).data('role')) {
             case 'hide' :
               editControlls.hide();
-              
               break;
             case 'h1':
             case 'h2':
