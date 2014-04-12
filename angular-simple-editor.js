@@ -28,20 +28,20 @@
       // replace: true,
       // transclude: true,
       // compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
-      link: function($scope, iElm, iAttrs, controller) {
-        
-        var editControlls = $('<div>',{          
+      link: function($scope, iElm, iAttrs, controller, $document) {
+        var uuid = _.uniqueId('ase');
+        var editControls = $('<div class="ase-editControls">',{
           class : 'well well-sm',
           role : 'toolbar'
         }).css({
-          position : 'fixed',
-          top : 30,
-          left : 0,
+          position : 'absolute',
+          top : iElm.offset().top - 50,
+          left : iElm.offset().left,
           display : 'none',
-          opacity : 0.5
+          opacity : 0.7
         });      
 
-        var controlls = "<div id='editControls' class='btn-toolbar'>" +
+        var controls = "<div id='" + uuid + "' class='btn-toolbar'>" +
           "<div class='btn-group'>" +
             "<a class='btn btn-default' data-role='undo' href='javascript:void(0)'><i class='fa fa-undo'></i></a>" +
             "<a class='btn btn-default' data-role='redo' href='javascript:void(0)'><i class='fa fa-repeat'></i></a>" +
@@ -76,19 +76,17 @@
           "</div>" 
         "</div>" ;
 
-        editControlls.append(controlls);
+        editControls.append(controls);
 
-        editControlls.css({
-          top : - editControlls.height()
-        });
-
-        iElm.parent().prepend(editControlls);
+        iElm.append(editControls);
         iElm.attr('contentEditable', true);
 
-        $('#editControls a').click(function(e) {
+        $('#' + uuid + ' a').click(function(e) {
           switch($(this).data('role')) {
             case 'hide' :
-              editControlls.hide();
+              debugger;
+              e.stopPropagation();
+              editControls.hide();
               break;
             case 'h1':
             case 'h2':
@@ -102,9 +100,9 @@
         });
 
         iElm.on('click', function() {
-          editControlls.show();
+          $('.ase-editControls').hide();
+          editControls.show();
         });
-
       }
     };
     }]);
